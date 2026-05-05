@@ -45,12 +45,12 @@ struct SettingsView: View {
                 NavigationLink(value: "Battery") {
                     Label("Battery", systemImage: "battery.100.bolt")
                 }
+                NavigationLink(value: "Pomodoro") {
+                    Label("Pomodoro", systemImage: "timer")
+                }
 //                NavigationLink(value: "Downloads") {
 //                    Label("Downloads", systemImage: "square.and.arrow.down")
 //                }
-                NavigationLink(value: "Shelf") {
-                    Label("Shelf", systemImage: "books.vertical")
-                }
                 NavigationLink(value: "Shortcuts") {
                     Label("Shortcuts", systemImage: "keyboard")
                 }
@@ -83,8 +83,8 @@ struct SettingsView: View {
                     HUD()
                 case "Battery":
                     Charge()
-                case "Shelf":
-                    Shelf()
+                case "Pomodoro":
+                    PomodoroSettings()
                 case "Shortcuts":
                     Shortcuts()
                 case "Extensions":
@@ -1743,6 +1743,52 @@ struct Shortcuts: View {
         }
         .accentColor(.effectiveAccent)
         .navigationTitle("Shortcuts")
+    }
+}
+
+struct PomodoroSettings: View {
+    @Default(.pomodoroWorkDuration) var workDuration
+    @Default(.pomodoroBreakDuration) var breakDuration
+    @Default(.pomodoroLongBreakDuration) var longBreakDuration
+    @Default(.pomodoroLongBreakInterval) var longBreakInterval
+    @Default(.pomodoroAutoStartBreaks) var autoStartBreaks
+    @Default(.pomodoroAutoStartWork) var autoStartWork
+    @Default(.pomodoroSoundNotification) var soundNotification
+    @Default(.showPomodoroTimer) var showPomodoroTimer
+
+    var body: some View {
+        Form {
+            Section {
+                Defaults.Toggle(key: .showPomodoroTimer) {
+                    Text("Show Pomodoro timer")
+                }
+            }
+
+            Section {
+                Stepper("Work: \(Int(workDuration / 60)) min", value: $workDuration, in: 60...120 * 60, step: 60)
+                Stepper("Short break: \(Int(breakDuration / 60)) min", value: $breakDuration, in: 60...60 * 60, step: 60)
+                Stepper("Long break: \(Int(longBreakDuration / 60)) min", value: $longBreakDuration, in: 60...60 * 60, step: 60)
+                Stepper("Long break every \(longBreakInterval) sessions", value: $longBreakInterval, in: 2...10)
+            } header: {
+                Text("Durations")
+            }
+
+            Section {
+                Defaults.Toggle(key: .pomodoroAutoStartBreaks) {
+                    Text("Auto-start breaks")
+                }
+                Defaults.Toggle(key: .pomodoroAutoStartWork) {
+                    Text("Auto-start work sessions")
+                }
+                Defaults.Toggle(key: .pomodoroSoundNotification) {
+                    Text("Sound notification")
+                }
+            } header: {
+                Text("Behavior")
+            }
+        }
+        .accentColor(.effectiveAccent)
+        .navigationTitle("Pomodoro")
     }
 }
 

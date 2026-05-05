@@ -119,12 +119,7 @@ class MusicManager: ObservableObject {
 
         switch type {
         case .nowPlaying:
-            // Only create NowPlayingController if not deprecated on this macOS version
-            if !self.isNowPlayingDeprecated {
-                newController = NowPlayingController()
-            } else {
-                return nil
-            }
+            newController = NowPlayingController()
         case .appleMusic:
             newController = AppleMusicController()
         case .spotify:
