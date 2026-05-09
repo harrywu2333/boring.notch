@@ -163,35 +163,19 @@ struct ClaudeCodeView: View {
                     .frame(maxWidth: .infinity)
             }
 
-            HStack(spacing: 16) {
-                Button(action: { manager.denyPermission() }) {
-                    HStack(spacing: 4) {
-                        Image(systemName: "xmark")
-                        Text("Deny")
-                    }
-                    .font(.caption)
-                    .fontWeight(.medium)
-                    .foregroundStyle(.red)
-                    .padding(.horizontal, 16)
-                    .padding(.vertical, 6)
-                    .background(.red.opacity(0.15), in: Capsule())
+            Button(action: { manager.jumpToSource() }) {
+                HStack(spacing: 4) {
+                    Image(systemName: "arrow.turn.up.left")
+                    Text("Open in VSCode")
                 }
-                .buttonStyle(.plain)
-
-                Button(action: { manager.approvePermission() }) {
-                    HStack(spacing: 4) {
-                        Image(systemName: "checkmark")
-                        Text("Approve")
-                    }
-                    .font(.caption)
-                    .fontWeight(.medium)
-                    .foregroundStyle(.green)
-                    .padding(.horizontal, 16)
-                    .padding(.vertical, 6)
-                    .background(.green.opacity(0.15), in: Capsule())
-                }
-                .buttonStyle(.plain)
+                .font(.caption)
+                .fontWeight(.medium)
+                .foregroundStyle(.blue)
+                .padding(.horizontal, 16)
+                .padding(.vertical, 6)
+                .background(.blue.opacity(0.15), in: Capsule())
             }
+            .buttonStyle(.plain)
         }
     }
 

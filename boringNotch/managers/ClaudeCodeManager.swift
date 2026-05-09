@@ -273,6 +273,7 @@ class ClaudeCodeManager: ObservableObject {
         switch event.eventType {
         case .stop:
             isActive = false
+            currentFile = nil
             if Defaults[.claudeCodeSoundNotification] {
                 playNotificationSound()
             }
@@ -289,12 +290,15 @@ class ClaudeCodeManager: ObservableObject {
         case .preToolUse:
             isActive = true
             if shouldAutoApprove(event) {
+                // Safe read-only tools: auto-approve via socket
                 sendPermissionResponse(fd: clientFD, approved: true, reason: "Auto-approved (read-only)")
             } else if Defaults[.claudeCodeAutoApprove] {
+                // Auto-approve everything
                 sendPermissionResponse(fd: clientFD, approved: true, reason: "Auto-approved")
             } else {
-                let request = ClaudeCodePermissionRequest(event: event, socketFileDescriptor: clientFD)
-                pendingPermission = request
+                // Show in notch for visibility, but close socket so VSCode can handle approval
+                pendingPermission = ClaudeCodePermissionRequest(event: event, socketFileDescriptor: -1)
+                close(clientFD)
             }
         }
     }
@@ -313,15 +317,19 @@ class ClaudeCodeManager: ObservableObject {
 
     func approvePermission() {
         guard let request = pendingPermission else { return }
-        sendPermissionResponse(fd: request.socketFileDescriptor, approved: true, reason: "Approved by user")
+        if request.socketFileDescriptor >= 0 {
+            sendPermissionResponse(fd: request.socketFileDescriptor, approved: true, reason: "Approved by user")
+        }
         pendingPermission = nil
-        // Jump to source after approving
+        // Jump to source so user can approve in VSCode
         jumpToSource()
     }
 
     func denyPermission() {
         guard let request = pendingPermission else { return }
-        sendPermissionResponse(fd: request.socketFileDescriptor, approved: false, reason: "Denied by user")
+        if request.socketFileDescriptor >= 0 {
+            sendPermissionResponse(fd: request.socketFileDescriptor, approved: false, reason: "Denied by user")
+        }
         pendingPermission = nil
     }
 
@@ -516,32 +524,9 @@ class ClaudeCodeManager: ObservableObject {
                 return None
 
         def handle_permission(event_data):
+            # Send to notch for display (non-blocking) and let VSCode handle approval
             sock = send_event(event_data)
-            if sock is None:
-                return
-            try:
-                sock.settimeout(30)
-                response_data = sock.recv(4096)
-                if response_data:
-                    resp = json.loads(response_data)
-                    output = resp.get("hookSpecificOutput", {})
-                    decision = output.get("permissionDecision", "allow")
-                    reason = output.get("permissionDecisionReason", "")
-                    result = {
-                        "hookSpecificOutput": {
-                            "hookEventName": "PreToolUse",
-                            "permissionDecision": decision,
-                            "permissionDecisionReason": reason
-                        }
-                    }
-                    print(json.dumps(result))
-                    if decision == "deny":
-                        sys.exit(0)
-            except socket.timeout:
-                pass
-            except Exception:
-                pass
-            finally:
+            if sock:
                 try: sock.close()
                 except: pass
 

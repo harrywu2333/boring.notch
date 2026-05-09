@@ -65,7 +65,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     private var screenLockedObserver: Any?
     private var screenUnlockedObserver: Any?
     private var isScreenLocked: Bool = false
-    private var windowScreenDidChangeObserver: Any?
+    var windowScreenDidChangeObserver: Any?
+    private var missionControlMonitor: Any?
+    private var ctrlKeyDown: Bool = false
 
     func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
         return false
@@ -84,6 +86,53 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         MusicManager.shared.destroy()
         cleanupWindows()
         XPCHelperClient.shared.stopMonitoringAccessibilityAuthorization()
+        teardownMissionControlDetection()
+    }
+
+    // MARK: - Mission Control Detection
+
+    private func setupMissionControlDetection() {
+        // Monitor global Ctrl key + Up/Down arrow to detect Mission Control
+        // Requires accessibility permission (already needed for HUD replacement)
+        missionControlMonitor = NSEvent.addGlobalMonitorForEvents(matching: [.keyDown, .keyUp, .flagsChanged]) { [weak self] event in
+            guard let self else { return }
+
+            if event.type == .flagsChanged {
+                let ctrlPressed = event.modifierFlags.intersection(.deviceIndependentFlagsMask).contains(.control)
+                if ctrlPressed {
+                    self.ctrlKeyDown = true
+                } else if self.ctrlKeyDown {
+                    // Ctrl released — show notch again
+                    self.ctrlKeyDown = false
+                    self.window?.alphaValue = 1
+                    for w in self.windows.values { w.alphaValue = 1 }
+                }
+            } else if event.type == .keyDown && self.ctrlKeyDown {
+                let keyCode = event.keyCode
+                if keyCode == 126 || keyCode == 125 {
+                    // Ctrl+Up (Mission Control) or Ctrl+Down (App Exposé)
+                    self.window?.alphaValue = 0
+                    for w in self.windows.values { w.alphaValue = 0 }
+                }
+            }
+        }
+    }
+
+    private func teardownMissionControlDetection() {
+        if let monitor = missionControlMonitor {
+            NSEvent.removeMonitor(monitor)
+            missionControlMonitor = nil
+        }
+    }
+
+    func hideNotchForMissionControl() {
+        window?.alphaValue = 0
+        for w in windows.values { w.alphaValue = 0 }
+    }
+
+    func showNotchAfterMissionControl() {
+        window?.alphaValue = 1
+        for w in windows.values { w.alphaValue = 1 }
     }
 
     @MainActor
@@ -351,6 +400,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 self.showOnboardingWindow(step: .musicPermission)
             }
         }
+
+        // Hide notch during Mission Control (Ctrl+Up)
+        setupMissionControlDetection()
 
         previousScreens = NSScreen.screens
     }

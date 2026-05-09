@@ -466,6 +466,10 @@ struct ContentView: View {
     }
 
     private func doOpen() {
+        // Auto-switch to Claude Code tab if active
+        if Defaults[.showClaudeCodeNotifier] && ClaudeCodeManager.shared.isActive {
+            coordinator.currentView = .claudeCode
+        }
         withAnimation(animationSpring) {
             vm.open()
         }
