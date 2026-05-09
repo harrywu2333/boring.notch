@@ -209,4 +209,10 @@ extension Defaults.Keys {
     static let pomodoroAutoStartBreaks = Key<Bool>("pomodoroAutoStartBreaks", default: false)
     static let pomodoroAutoStartWork = Key<Bool>("pomodoroAutoStartWork", default: false)
     static let pomodoroSoundNotification = Key<Bool>("pomodoroSoundNotification", default: true)
+
+    // MARK: Claude Code
+    static let showClaudeCodeNotifier = Key<Bool>("showClaudeCodeNotifier", default: false)
+    static let claudeCodeSoundNotification = Key<Bool>("claudeCodeSoundNotification", default: true)
+    static let claudeCodeAutoApprove = Key<Bool>("claudeCodeAutoApprove", default: false)
+    static let claudeCodePermissionTimeout = Key<Double>("claudeCodePermissionTimeout", default: 30)
 }

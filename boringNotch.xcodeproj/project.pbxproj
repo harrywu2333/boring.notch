@@ -146,6 +146,9 @@
 		B1F747F92EC7E94000F841DB /* LottieView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1F747F82EC7E94000F841DB /* LottieView.swift */; };
 		B1FEB4992C7686630066EBBC /* PanGesture.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1FEB4982C7686630066EBBC /* PanGesture.swift */; };
 		F38DE6482D8243E7008B5C6D /* BatteryActivityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F38DE6472D8243E2008B5C6D /* BatteryActivityManager.swift */; };
+		CC00000200000001CCCCCC01 /* ClaudeCodeEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC00000100000001CCCCCC01 /* ClaudeCodeEvent.swift */; };
+		CC00000200000002CCCCCC02 /* ClaudeCodeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC00000100000002CCCCCC02 /* ClaudeCodeManager.swift */; };
+		CC00000200000003CCCCCC03 /* ClaudeCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC00000100000003CCCCCC03 /* ClaudeCodeView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -315,6 +318,9 @@
 		B1F747F82EC7E94000F841DB /* LottieView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LottieView.swift; sourceTree = "<group>"; };
 		B1FEB4982C7686630066EBBC /* PanGesture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanGesture.swift; sourceTree = "<group>"; };
 		F38DE6472D8243E2008B5C6D /* BatteryActivityManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BatteryActivityManager.swift; sourceTree = "<group>"; };
+		CC00000100000001CCCCCC01 /* ClaudeCodeEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClaudeCodeEvent.swift; sourceTree = "<group>"; };
+		CC00000100000002CCCCCC02 /* ClaudeCodeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClaudeCodeManager.swift; sourceTree = "<group>"; };
+		CC00000100000003CCCCCC03 /* ClaudeCodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClaudeCodeView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -511,6 +517,7 @@
 				507266DA2C908E2E00A2D00D /* HoverButton.swift */,
 				B1F747F82EC7E94000F841DB /* LottieView.swift */,
 				AABBCCDD00000007 /* Pomodoro */,
+				CC00000300000001CCCCCC01 /* ClaudeCode */,
 			);
 			path = components;
 			sourceTree = "<group>";
@@ -527,6 +534,7 @@
 				B1F0A0012E60000100000001 /* BrightnessManager.swift */,
 				59D8C23B2E589FAA00147B33 /* VolumeManager.swift */,
 				AABBCCDD00000003 /* PomodoroManager.swift */,
+				CC00000100000002CCCCCC02 /* ClaudeCodeManager.swift */,
 			);
 			path = managers;
 			sourceTree = "<group>";
@@ -643,6 +651,7 @@
 				14D570C82C5F38890011E668 /* BoringViewModel.swift */,
 				14D570CA2C5F4B2C0011E668 /* BatteryStatusViewModel.swift */,
 				1153BD902D986DB300979FB0 /* PlaybackState.swift */,
+				CC00000100000001CCCCCC01 /* ClaudeCodeEvent.swift */,
 			);
 			path = models;
 			sourceTree = "<group>";
@@ -673,6 +682,14 @@
 				AABBCCDD00000005 /* PomodoroView.swift */,
 			);
 			path = Pomodoro;
+			sourceTree = "<group>";
+		};
+		CC00000300000001CCCCCC01 /* ClaudeCode */ = {
+			isa = PBXGroup;
+			children = (
+				CC00000100000003CCCCCC03 /* ClaudeCodeView.swift */,
+			);
+			path = ClaudeCode;
 			sourceTree = "<group>";
 		};
 		B141C23B2CA5F50900AC8CC8 /* Onboarding */ = {
@@ -1040,6 +1057,9 @@
 				1100290C2E847E2800035A57 /* NSItemProvider+LoadHelpers.swift in Sources */,
 				11CFC6632E09918400748C80 /* MusicControllerSelectionView.swift in Sources */,
 				B1F0A0022E60000100000001 /* BrightnessManager.swift in Sources */,
+				CC00000200000001CCCCCC01 /* ClaudeCodeEvent.swift in Sources */,
+				CC00000200000002CCCCCC02 /* ClaudeCodeManager.swift in Sources */,
+				CC00000200000003CCCCCC03 /* ClaudeCodeView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

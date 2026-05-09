@@ -48,6 +48,9 @@ struct SettingsView: View {
                 NavigationLink(value: "Pomodoro") {
                     Label("Pomodoro", systemImage: "timer")
                 }
+                NavigationLink(value: "Claude Code") {
+                    Label("Claude Code", systemImage: "terminal.fill")
+                }
 //                NavigationLink(value: "Downloads") {
 //                    Label("Downloads", systemImage: "square.and.arrow.down")
 //                }
@@ -85,6 +88,8 @@ struct SettingsView: View {
                     Charge()
                 case "Pomodoro":
                     PomodoroSettings()
+                case "Claude Code":
+                    ClaudeCodeSettings()
                 case "Shortcuts":
                     Shortcuts()
                 case "Extensions":
@@ -1789,6 +1794,67 @@ struct PomodoroSettings: View {
         }
         .accentColor(.effectiveAccent)
         .navigationTitle("Pomodoro")
+    }
+}
+
+struct ClaudeCodeSettings: View {
+    @Default(.showClaudeCodeNotifier) var showClaudeCodeNotifier
+    @Default(.claudeCodeSoundNotification) var soundNotification
+    @Default(.claudeCodeAutoApprove) var autoApprove
+    @Default(.claudeCodePermissionTimeout) var permissionTimeout
+
+    @ObservedObject var manager = ClaudeCodeManager.shared
+
+    var body: some View {
+        Form {
+            Section {
+                Defaults.Toggle(key: .showClaudeCodeNotifier) {
+                    Text("Enable Claude Code notifier")
+                }
+            }
+
+            Section {
+                Defaults.Toggle(key: .claudeCodeSoundNotification) {
+                    Text("Sound on task completion")
+                }
+                Defaults.Toggle(key: .claudeCodeAutoApprove) {
+                    Text("Auto-approve tool requests")
+                }
+                Stepper("Permission timeout: \(Int(permissionTimeout))s", value: $permissionTimeout, in: 10...120, step: 10)
+            } header: {
+                Text("Behavior")
+            }
+
+            Section {
+                HStack {
+                    Text("Hook status")
+                    Spacer()
+                    if manager.hooksInstalled {
+                        Text("Installed")
+                            .foregroundStyle(.green)
+                    } else {
+                        Text("Not installed")
+                            .foregroundStyle(.secondary)
+                    }
+                }
+
+                Button(manager.hooksInstalled ? "Reinstall hooks" : "Install hooks") {
+                    manager.installHooks()
+                }
+
+                if manager.hooksInstalled {
+                    Button("Uninstall hooks", role: .destructive) {
+                        manager.uninstallHooks()
+                    }
+                }
+            } header: {
+                Text("Hook Script")
+            } footer: {
+                Text("Installs a hook script to ~/.claude/hooks/ that sends Claude Code events to Boring Notch.")
+            }
+        }
+        .accentColor(.effectiveAccent)
+        .navigationTitle("Claude Code")
     }
 }
 

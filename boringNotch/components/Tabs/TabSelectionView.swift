@@ -17,7 +17,8 @@ struct TabModel: Identifiable {
 
 let allTabs = [
     TabModel(label: "Home", icon: "house.fill", view: .home),
-    TabModel(label: "Timer", icon: "timer", view: .pomodoro)
+    TabModel(label: "Timer", icon: "timer", view: .pomodoro),
+    TabModel(label: "Claude", icon: "terminal.fill", view: .claudeCode)
 ]
 
 struct TabSelectionView: View {
@@ -27,6 +28,7 @@ struct TabSelectionView: View {
     var visibleTabs: [TabModel] {
         allTabs.filter { tab in
             if tab.view == .pomodoro { return Defaults[.showPomodoroTimer] }
+            if tab.view == .claudeCode { return Defaults[.showClaudeCodeNotifier] }
             return true
         }
     }

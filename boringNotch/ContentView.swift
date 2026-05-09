@@ -265,6 +265,9 @@ struct ContentView: View {
                       } else if vm.notchState == .closed && PomodoroManager.shared.isRunning && Defaults[.showPomodoroTimer] && !vm.hideOnClosed {
                           PomodoroClosedNotchView()
                               .frame(alignment: .center)
+                      } else if vm.notchState == .closed && Defaults[.showClaudeCodeNotifier] && (ClaudeCodeManager.shared.pendingPermission != nil || ClaudeCodeManager.shared.isActive) && !vm.hideOnClosed {
+                          ClaudeCodeClosedNotchView()
+                              .frame(alignment: .center)
                       } else if !coordinator.expandingView.show && vm.notchState == .closed && (!musicManager.isPlaying && musicManager.isPlayerIdle) && Defaults[.showNotHumanFace] && !vm.hideOnClosed  {
                           BoringFaceAnimation()
                        } else if vm.notchState == .open {
@@ -324,6 +327,8 @@ struct ContentView: View {
                         NotchHomeView(albumArtNamespace: albumArtNamespace)
                     case .pomodoro:
                         PomodoroView()
+                    case .claudeCode:
+                        ClaudeCodeView()
                     }
                 }
                 .transition(
