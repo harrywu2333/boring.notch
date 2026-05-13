@@ -51,6 +51,9 @@ struct SettingsView: View {
                 NavigationLink(value: "Claude Code") {
                     Label("Claude Code", systemImage: "terminal.fill")
                 }
+                NavigationLink(value: "Clipboard") {
+                    Label("Clipboard", systemImage: "clipboard.fill")
+                }
 //                NavigationLink(value: "Downloads") {
 //                    Label("Downloads", systemImage: "square.and.arrow.down")
 //                }
@@ -90,6 +93,8 @@ struct SettingsView: View {
                     PomodoroSettings()
                 case "Claude Code":
                     ClaudeCodeSettings()
+                case "Clipboard":
+                    ClipboardSettings()
                 case "Shortcuts":
                     Shortcuts()
                 case "Extensions":
@@ -1903,6 +1908,46 @@ func warningBadge(_ text: String, _ description: String) -> some View {
             }
             Spacer()
         }
+    }
+}
+
+struct ClipboardSettings: View {
+    @Default(.showClipboardManager) var showClipboardManager
+    @ObservedObject var manager = ClipboardManager.shared
+
+    var body: some View {
+        Form {
+            Section {
+                Toggle("Enable clipboard manager", isOn: $showClipboardManager)
+                    .onChange(of: showClipboardManager) { _, newValue in
+                        if newValue {
+                            manager.start()
+                        } else {
+                            manager.stop()
+                        }
+                    }
+            } header: {
+                Text("Clipboard")
+            } footer: {
+                Text("Monitors your clipboard and keeps a history of copied items. Click an item to copy it back.")
+            }
+
+            if showClipboardManager {
+                Section("History") {
+                    HStack {
+                        Text("Items saved")
+                        Spacer()
+                        Text("\(manager.entries.count)")
+                            .foregroundStyle(.secondary)
+                    }
+                    Button("Clear history", role: .destructive) {
+                        manager.clear()
+                    }
+                }
+            }
+        }
+        .formStyle(.grouped)
+        .navigationTitle("Clipboard")
     }
 }
 

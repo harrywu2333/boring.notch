@@ -215,4 +215,7 @@ extension Defaults.Keys {
     static let claudeCodeSoundNotification = Key<Bool>("claudeCodeSoundNotification", default: true)
     static let claudeCodeAutoApprove = Key<Bool>("claudeCodeAutoApprove", default: false)
     static let claudeCodePermissionTimeout = Key<Double>("claudeCodePermissionTimeout", default: 30)
+
+    // MARK: Clipboard
+    static let showClipboardManager = Key<Bool>("showClipboardManager", default: false)
 }

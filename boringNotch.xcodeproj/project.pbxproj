@@ -149,6 +149,8 @@
 		CC00000200000001CCCCCC01 /* ClaudeCodeEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC00000100000001CCCCCC01 /* ClaudeCodeEvent.swift */; };
 		CC00000200000002CCCCCC02 /* ClaudeCodeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC00000100000002CCCCCC02 /* ClaudeCodeManager.swift */; };
 		CC00000200000003CCCCCC03 /* ClaudeCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC00000100000003CCCCCC03 /* ClaudeCodeView.swift */; };
+		CL00000200000001CCCCCC01 /* ClipboardManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CL00000100000001CCCCCC01 /* ClipboardManager.swift */; };
+		CL00000200000002CCCCCC02 /* ClipboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CL00000100000002CCCCCC02 /* ClipboardView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -321,6 +323,8 @@
 		CC00000100000001CCCCCC01 /* ClaudeCodeEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClaudeCodeEvent.swift; sourceTree = "<group>"; };
 		CC00000100000002CCCCCC02 /* ClaudeCodeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClaudeCodeManager.swift; sourceTree = "<group>"; };
 		CC00000100000003CCCCCC03 /* ClaudeCodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClaudeCodeView.swift; sourceTree = "<group>"; };
+		CL00000100000001CCCCCC01 /* ClipboardManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipboardManager.swift; sourceTree = "<group>"; };
+		CL00000100000002CCCCCC02 /* ClipboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipboardView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -518,6 +522,7 @@
 				B1F747F82EC7E94000F841DB /* LottieView.swift */,
 				AABBCCDD00000007 /* Pomodoro */,
 				CC00000300000001CCCCCC01 /* ClaudeCode */,
+				CL00000300000001CCCCCC01 /* Clipboard */,
 			);
 			path = components;
 			sourceTree = "<group>";
@@ -535,6 +540,7 @@
 				59D8C23B2E589FAA00147B33 /* VolumeManager.swift */,
 				AABBCCDD00000003 /* PomodoroManager.swift */,
 				CC00000100000002CCCCCC02 /* ClaudeCodeManager.swift */,
+				CL00000100000001CCCCCC01 /* ClipboardManager.swift */,
 			);
 			path = managers;
 			sourceTree = "<group>";
@@ -692,6 +698,14 @@
 			path = ClaudeCode;
 			sourceTree = "<group>";
 		};
+			CL00000300000001CCCCCC01 /* Clipboard */ = {
+				isa = PBXGroup;
+				children = (
+					CL00000100000002CCCCCC02 /* ClipboardView.swift */,
+				);
+				path = Clipboard;
+				sourceTree = "<group>";
+			};
 		B141C23B2CA5F50900AC8CC8 /* Onboarding */ = {
 			isa = PBXGroup;
 			children = (
@@ -1060,6 +1074,8 @@
 				CC00000200000001CCCCCC01 /* ClaudeCodeEvent.swift in Sources */,
 				CC00000200000002CCCCCC02 /* ClaudeCodeManager.swift in Sources */,
 				CC00000200000003CCCCCC03 /* ClaudeCodeView.swift in Sources */,
+				CL00000200000001CCCCCC01 /* ClipboardManager.swift in Sources */,
+				CL00000200000002CCCCCC02 /* ClipboardView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -329,6 +329,8 @@ struct ContentView: View {
                         PomodoroView()
                     case .claudeCode:
                         ClaudeCodeView()
+                    case .clipboard:
+                        ClipboardView()
                     }
                 }
                 .transition(
